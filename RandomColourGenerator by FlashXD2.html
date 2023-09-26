@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RandomColourGenerator by FlashXD2</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #colorDisplay {
+            font-size: 24px;
+            color: white;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .button-container button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            width: 150px; /* Ancho igual para ambos botones */
+        }
+    </style>
+</head>
+<body>
+    <div id="colorDisplay">
+        Color: <span id="colorCode"></span><br>
+        <div class="button-container">
+            <button id="copyButton">Copiar Código</button>
+            <button id="newColorButton">Nuevo Color</button>
+        </div>
+    </div>
+    
+    <script>
+        function getRandomColor() {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+
+        document.getElementById("copyButton").addEventListener("click", function() {
+            const randomColor = document.getElementById("colorCode").textContent;
+            copyToClipboard(randomColor);
+            alert("Código de color copiado al portapapeles: " + randomColor);
+        });
+
+        document.getElementById("newColorButton").addEventListener("click", function() {
+            const randomColor = getRandomColor();
+            document.body.style.backgroundColor = randomColor;
+            document.getElementById("colorCode").textContent = randomColor;
+        });
+
+        // Generar un color aleatorio al cargar la página
+        const initialColor = getRandomColor();
+        document.body.style.backgroundColor = initialColor;
+        document.getElementById("colorCode").textContent = initialColor;
+    </script>
+</body>
+</html>
